@@ -39,6 +39,19 @@ http.createServer((req,res)=>{
     let parseUrl = url.parse(req.url,true);
     console.log(parseUrl);
 
+    //handling cros for reading 
+    res.setHeader('Access-Control-Allow-Origin','*');
+    //to put smthg
+    res.setHeader('Access-Control-Allow-Headers','*');
+    //not nesscarry but if u want to allow some specific methods
+    res.setHeader('Access-Control-Allow-Headers','*');
+
+    
+    // to handle OPTIONS pre-flight which comes before POST,PUT,DELETE automatically
+    if(req.method=='OPTIONS'){
+        res.end();
+    }
+
     //get whole products detail
     if(parseUrl.pathname=='/products' && req.method=='GET' && parseUrl.query.id==undefined){
         res.end(products);
@@ -62,7 +75,7 @@ http.createServer((req,res)=>{
     }
 
     //create new object and add to the products.json file
-    else if(req.method='POST' && parseUrl.pathname=='/products'){
+    else if(req.method=='POST' && parseUrl.pathname=='/products'){
         let product = "";
         //this event is called for every chunk received
         req.on("data",(chunks)=>{
@@ -79,8 +92,69 @@ http.createServer((req,res)=>{
             fs.writeFile('./products.json',JSON.stringify(arrProduct),(err)=>{
                 if(err==null){
                     res.end(JSON.stringify({"message":'Successfuly added the new data'}))
+                }else{
+                    res.end(JSON.stringify({"message":'Found some error'}))
                 }
             })
+        })
+    }
+
+    //endpoint to delete a product
+    else if(req.method=='DELETE' && parseUrl.pathname=='/products'){
+        let arrProduct = JSON.parse(products);
+
+        let index = arrProduct.findIndex((product)=>{
+            return product.id==parseUrl.query.id;
+        })
+
+        if(index!=-1){
+            // remove (index) only    *if index,index+1 => splice(index,2)*
+            arrProduct.splice(index,1);
+
+            fs.writeFile('./products.json',JSON.stringify(arrProduct),(err)=>{
+                if(err==null){
+                    res.end(JSON.stringify({"message":'Successfuly deleted the product'}))
+                }else{
+                    res.end(JSON.stringify({"message":'Found some error'}))
+                }
+            })
+        }
+        else{
+            res.end(JSON.stringify({'message':'Given id do not exist'}));
+        }
+        
+    }
+
+    //end point to update existing product
+    else if(req.method=='PUT' && parseUrl.pathname=='/products'){
+        let product = "";
+        req.on("data",(chunks)=>{
+            product +=chunks;
+        })
+
+        req.on("end",()=>{
+            let arrProduct = JSON.parse(products);
+            let updatedProduct = JSON.parse(product);
+            
+            let index = arrProduct.findIndex((product)=>{
+                return product.id == parseUrl.query.id;
+            })
+
+            if(index!=-1){
+                arrProduct[index] = updatedProduct;
+
+                fs.writeFile('./products.json',JSON.stringify(arrProduct),(err)=>{
+                    if(err==null){
+                        res.end(JSON.stringify({'message':'Successfully updated id'+parseUrl.query.id}));
+                    }else{
+                        res.end(JSON.stringify({'message':'some error found!!'}));
+                    }
+                })
+
+            }else{
+                res.end(JSON.stringify({'message':'Given id do not exist'}));
+            }
+  
         })
     }
 

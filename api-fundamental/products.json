@@ -484,10 +484,10 @@
     },
     {
         "id": 31,
-        "title": "iPhone 15",
-        "price": 899,
-        "discountPercentage": 17.94,
-        "rating": 4.44,
+        "title": "iphone 15",
+        "price": 1999,
+        "discountPercentage": 13.94,
+        "rating": 4.54,
         "stock": 34,
         "brand": "Apple",
         "category": "smartphones",
@@ -500,14 +500,31 @@
         ]
     },
     {
-        "id": 31,
-        "title": "iPhone 15",
-        "price": 899,
-        "discountPercentage": 17.94,
-        "rating": 4.44,
+        "id": 32,
+        "title": "mouse",
+        "price": 9.25,
+        "discountPercentage": 13.94,
+        "rating": 3.99,
         "stock": 34,
         "brand": "Apple",
-        "category": "smartphones",
+        "category": "Accessary",
+        "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+        "images": [
+            "https://i.dummyjson.com/data/products/2/1.jpg",
+            "https://i.dummyjson.com/data/products/2/2.jpg",
+            "https://i.dummyjson.com/data/products/2/3.jpg",
+            "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+        ]
+    },
+    {
+        "id": 36,
+        "title": "ink",
+        "price": 9.25,
+        "discountPercentage": 13.94,
+        "rating": 0.99,
+        "stock": 34,
+        "brand": "Apple",
+        "category": "Accessary",
         "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
         "images": [
             "https://i.dummyjson.com/data/products/2/1.jpg",
