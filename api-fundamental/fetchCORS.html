@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handling CROS</title>
+</head>
+<body>
+
+
+    <script>
+
+        let prod = {
+            "id": 36,
+            "title": "ink",
+            "price": 9.25,
+            "discountPercentage": 13.94,
+            "rating": 0.99,
+            "stock": 34,
+            "brand": "Apple",
+            "category": "Accessary",
+            "thumbnail": "https://i.dummyjson.com/data/products/2/thumbnail.jpg",
+            "images": [
+                "https://i.dummyjson.com/data/products/2/1.jpg",
+                "https://i.dummyjson.com/data/products/2/2.jpg",
+                "https://i.dummyjson.com/data/products/2/3.jpg",
+                "https://i.dummyjson.com/data/products/2/thumbnail.jpg"
+            ]
+        }
+
+
+        fetch('http://localhost:8000/products', {
+            method: 'POST',
+            body: JSON.stringify(prod),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.error('Error during POST request:', err);
+            });
+
+
+
+
+    </script>
+    
+</body>
+</html>
